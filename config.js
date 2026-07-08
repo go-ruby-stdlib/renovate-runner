@@ -9,11 +9,28 @@ module.exports = {
   onboarding: false,          // every repo already ships a renovate.json
   requireConfig: 'optional',  // process a repo even if it has no renovate.json
   dependencyDashboard: true,  // a "Dependency Dashboard" issue per repo
+
   // First-run safety valve: 'full' = extract + look up + report, open NO PRs and
-  // create NO issues. Flip to null (delete this line) to go live.
+  // create NO issues. DELETE this line to go live.
   dryRun: 'full',
-  // Fleet throttles so the first live run trickles rather than floods.
+
+  // Fleet throttles so a live run trickles rather than floods.
   prConcurrentLimit: 10,
   prHourlyLimit: 10,
   branchConcurrentLimit: 20,
+
+  // Collapse the noise: one PR per repo for all GitHub Actions bumps, and one for
+  // the MkDocs docs toolchain, instead of a separate PR per action / per package.
+  packageRules: [
+    {
+      matchManagers: ['github-actions'],
+      groupName: 'github actions',
+      groupSlug: 'github-actions',
+    },
+    {
+      matchManagers: ['pip_requirements', 'pip-compile', 'pep621', 'poetry'],
+      groupName: 'docs toolchain (mkdocs)',
+      groupSlug: 'docs-mkdocs',
+    },
+  ],
 };
