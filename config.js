@@ -10,9 +10,6 @@ module.exports = {
   requireConfig: 'optional',  // process a repo even if it has no renovate.json
   dependencyDashboard: true,  // a "Dependency Dashboard" issue per repo
 
-  // First-run safety valve: 'full' = extract + look up + report, open NO PRs and
-  // create NO issues. DELETE this line to go live.
-  dryRun: 'full',
 
   // Fleet throttles so a live run trickles rather than floods.
   prConcurrentLimit: 10,
