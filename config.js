@@ -4,6 +4,7 @@
 // no per-org GitHub App install.
 module.exports = {
   platform: 'github',
+  gitAuthor: 'tannevaled <tannevaled@users.noreply.github.com>',  // account blocks pushes exposing a non-noreply email
   autodiscover: true,
   autodiscoverFilter: ['go-ruby-*/**'],
   onboarding: false,          // every repo already ships a renovate.json
