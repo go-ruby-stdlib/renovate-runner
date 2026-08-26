@@ -1,0 +1,37 @@
+name: ci
+
+# This repository drives Renovate for the whole go-ruby-* fleet from a single
+# config.js, and it had no pull_request lane at all: a change to that file
+# arrived with no signal, and a broken config stops every dependency update
+# across the fleet silently -- the scheduled run just does nothing useful.
+#
+# There is nothing to compile here, so the lane validates instead: the config
+# is checked with Renovate's own validator, which reads it semantically rather
+# than merely parsing it.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # `node --check` first: a syntax error gives a clearer message here than
+      # it would from inside the validator.
+      - name: Check config.js parses
+        run: node --check config.js
+
+      - name: Validate the Renovate config
+        run: npx --yes --package renovate@latest renovate-config-validator config.js
