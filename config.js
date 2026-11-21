@@ -9,7 +9,7 @@ module.exports = {
   autodiscoverFilter: ['go-ruby-*/**'],
   onboarding: false,          // every repo already ships a renovate.json
   requireConfig: 'optional',  // process a repo even if it has no renovate.json
-  dependencyDashboard: true,  // a "Dependency Dashboard" issue per repo
+  dependencyDashboard: { enabled: true },  // a "Dependency Dashboard" issue per repo
 
 
   // Fleet throttles so a live run trickles rather than floods.
